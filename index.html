@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing Poster Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      background-color: #f0f4f8;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    img {
+      max-width: 100%;
+      margin-top: 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Marketing Poster Generator</h1>
+
+  <label for="text">Text / Idea:</label>
+  <textarea id="text" placeholder="Enter your marketing idea..." rows="2"></textarea>
+
+  <label for="stats">Optional Stats (JSON format):</label>
+  <textarea id="stats" placeholder='{"target_age":"18-30","sector_focus":"tech"}' rows="4"></textarea>
+
+  <button id="generateBtn">Generate Poster</button>
+
+  <div class="output" id="output" style="display:none;">
+    <h3>Caption:</h3>
+    <p id="caption"></p>
+
+    <h3>Poster Prompt:</h3>
+    <p id="poster_prompt"></p>
+
+    <h3>Generated Image:</h3>
+    <img id="generatedImage" src="" alt="Generated Poster">
+  </div>
+
+  <script>
+    const btn = document.getElementById("generateBtn");
+    const captionEl = document.getElementById("caption");
+    const promptEl = document.getElementById("poster_prompt");
+    const imgEl = document.getElementById("generatedImage");
+    const outputDiv = document.getElementById("output");
+
+    function parseStatsInput(text) {
+      if (!text || !text.trim()) return {};
+      try {
+        const obj = JSON.parse(text);
+        if (typeof obj !== 'object' || Array.isArray(obj) || obj === null) {
+          throw new Error('Stats must be a JSON object (e.g. {"price":499})');
+        }
+        return obj;
+      } catch (err) {
+        throw new Error('Invalid JSON in stats field: ' + err.message);
+      }
+    }
+
+    btn.addEventListener("click", async () => {
+      const text = document.getElementById("text").value;
+      let stats = {};
+      try {
+        stats = parseStatsInput(document.getElementById('stats').value);
+      } catch(e) {
+        alert(e.message);
+        return;
+      }
+
+      if (!text.trim()) {
+        alert("Please enter some text or idea");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Generating...";
+
+      try {
+        const res = await fetch("/api/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text, stats })
+        });
+
+        
+        let data = null;
+        const ct = res.headers.get("content-type") || "";
+        if (ct.includes("application/json")) {
+      
+          data = await res.json();
+        } else {
+         
+          const txt = await res.text();
+          if (!txt || !txt.trim()) {
+            throw new Error(`Empty response from server (status ${res.status})`);
+          }
+          try {
+            data = JSON.parse(txt);
+          } catch (e) {
+            throw new Error(`Server returned non-JSON response (status ${res.status}): ${txt}`);
+          }
+        }
+
+        if (data.error) {
+          alert("Error: " + (data.error.message || data.error || JSON.stringify(data)));
+          btn.disabled = false;
+          btn.textContent = "Generate Poster";
+          return;
+        }
+
+        captionEl.textContent = data.caption;
+        promptEl.textContent = data.poster_prompt;
+        imgEl.src = data.image || "";
+        outputDiv.style.display = "block";
+
+      } catch (err) {
+        alert("Failed to generate poster: " + err.message);
+      }
+
+      btn.disabled = false;
+      btn.textContent = "Generate Poster";
+    });
+  </script>
+</body>
+</html>
