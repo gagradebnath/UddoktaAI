@@ -1,6 +1,22 @@
 # Multi-stage Dockerfile for Next.js app
 # Optimized for minimal image size and fast builds
 
+
+# ================================
+# Instructions
+# ================================
+
+# Build and start the application
+#     docker-compose up --build
+
+# Run in background
+#     docker-compose up -d --build
+
+# Stop the application
+#     docker-compose down
+
+
+
 # ================================
 # Build Stage
 # ================================
