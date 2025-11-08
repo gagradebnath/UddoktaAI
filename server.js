@@ -126,7 +126,7 @@ async function callHfModel(modelId, prompt) {
   if (hfSdkClient) {
     try {
       console.log("Calling HF SDK textToImage for model:", modelId);
-      const sdkResp = await hfSdkClient.textToImage({ model: modelId, inputs: prompt, provider: process.env.HF_PROVIDER, parameters: body.parameters });
+      const sdkResp = await hfSdkClient.textToImage({ model: modelId, inputs: prompt, provider: HF_PROVIDER, parameters: body.parameters });
 
       if (sdkResp && typeof sdkResp.arrayBuffer === 'function') {
         const buf = await sdkResp.arrayBuffer();
