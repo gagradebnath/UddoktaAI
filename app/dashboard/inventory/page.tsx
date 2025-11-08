@@ -72,13 +72,13 @@ const forecastData = [
 const getStatusColor = (status: string) => {
   switch (status) {
     case "critical":
-      return "bg-red-500/10 text-red-400 border-red-500/20"
+      return "bg-[#E74C3C]/10 text-[#E74C3C] border-[#E74C3C]/20"
     case "warning":
-      return "bg-orange-500/10 text-orange-400 border-orange-500/20"
+      return "bg-[#F57C20]/10 text-[#F57C20] border-[#F57C20]/20"
     case "healthy":
-      return "bg-green-500/10 text-green-400 border-green-500/20"
+      return "bg-[#34A853]/10 text-[#34A853] border-[#34A853]/20"
     default:
-      return "bg-slate-500/10 text-slate-400 border-slate-500/20"
+      return "bg-[#E0E0E0]/10 text-[#555555] border-[#E0E0E0]/20"
   }
 }
 
@@ -109,19 +109,19 @@ export default function InventoryPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white mb-1">Inventory AI</h1>
-        <p className="text-slate-400">Predictive inventory management & demand forecasting</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#333333] mb-1">Inventory AI</h1>
+        <p className="text-[#555555]">Predictive inventory management & demand forecasting</p>
       </div>
 
       {/* Forecasting Chart */}
-      <Card className="bg-slate-800/50 border-slate-700">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle className="text-white">Sales Forecast (Next 30 Days)</CardTitle>
+      <Card className="bg-white border-[#E0E0E0]">
+        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0 pb-4">
+          <CardTitle className="text-[#333333]">Sales Forecast (Next 30 Days)</CardTitle>
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-48 bg-slate-700 border-slate-600 text-white">
+            <SelectTrigger className="w-full sm:w-48 bg-white border-[#E0E0E0] text-[#333333]">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-slate-800 border-slate-700">
+            <SelectContent className="bg-white border-[#E0E0E0]">
               <SelectItem value="organic-black-tea">Organic Black Tea</SelectItem>
               <SelectItem value="green-tea">Premium Green Tea</SelectItem>
               <SelectItem value="oolong">Oolong Tea Blend</SelectItem>
@@ -132,20 +132,21 @@ export default function InventoryPage() {
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={forecastData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.1)" />
-              <XAxis stroke="rgb(148, 163, 184)" />
-              <YAxis stroke="rgb(148, 163, 184)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E0E0E0" />
+              <XAxis stroke="#555555" />
+              <YAxis stroke="#555555" />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgb(15, 23, 42)",
-                  border: "1px solid rgb(30, 41, 59)",
+                  backgroundColor: "white",
+                  border: "1px solid #E0E0E0",
+                  color: "#333333"
                 }}
               />
               <Legend />
               <Line
                 type="monotone"
                 dataKey="actual"
-                stroke="#3b82f6"
+                stroke="#4B4B4B"
                 strokeWidth={2}
                 name="Actual Sales"
                 connectNulls
@@ -164,31 +165,31 @@ export default function InventoryPage() {
       </Card>
 
       {/* Low Stock Risk Table */}
-      <Card className="bg-slate-800/50 border-slate-700">
+      <Card className="bg-white border-[#E0E0E0]">
         <CardHeader>
-          <CardTitle className="text-white">Low Stock Risk Alert</CardTitle>
+          <CardTitle className="text-[#333333]">Low Stock Risk Alert</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="border-b border-slate-700">
+              <thead className="border-b border-[#E0E0E0]">
                 <tr>
-                  <th className="text-left py-3 px-4 text-slate-400 font-medium">Product Name</th>
-                  <th className="text-left py-3 px-4 text-slate-400 font-medium">Current Stock</th>
-                  <th className="text-left py-3 px-4 text-slate-400 font-medium">7-Day Forecast</th>
-                  <th className="text-left py-3 px-4 text-slate-400 font-medium">Days to Stockout</th>
-                  <th className="text-left py-3 px-4 text-slate-400 font-medium">Status</th>
-                  <th className="text-left py-3 px-4 text-slate-400 font-medium">Action</th>
+                  <th className="text-left py-3 px-4 text-[#555555] font-medium">Product Name</th>
+                  <th className="text-left py-3 px-4 text-[#555555] font-medium">Current Stock</th>
+                  <th className="text-left py-3 px-4 text-[#555555] font-medium">7-Day Forecast</th>
+                  <th className="text-left py-3 px-4 text-[#555555] font-medium">Days to Stockout</th>
+                  <th className="text-left py-3 px-4 text-[#555555] font-medium">Status</th>
+                  <th className="text-left py-3 px-4 text-[#555555] font-medium">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-700">
+              <tbody className="divide-y divide-[#E0E0E0]">
                 {inventoryProducts.map((product) => (
-                  <tr key={product.id} className="hover:bg-slate-700/30 transition-colors">
-                    <td className="py-3 px-4 text-white font-medium">{product.name}</td>
-                    <td className="py-3 px-4 text-slate-300">{product.current_stock} units</td>
-                    <td className="py-3 px-4 text-slate-300">{product.demand_7_days} units</td>
+                  <tr key={product.id} className="hover:bg-[#F9FAFB] transition-colors">
+                    <td className="py-3 px-4 text-[#333333] font-medium">{product.name}</td>
+                    <td className="py-3 px-4 text-[#555555]">{product.current_stock} units</td>
+                    <td className="py-3 px-4 text-[#555555]">{product.demand_7_days} units</td>
                     <td className="py-3 px-4">
-                      <span className="text-slate-300">{product.days_until_stockout} days</span>
+                      <span className="text-[#555555]">{product.days_until_stockout} days</span>
                     </td>
                     <td className="py-3 px-4">
                       <div
@@ -205,7 +206,7 @@ export default function InventoryPage() {
                       </div>
                     </td>
                     <td className="py-3 px-4">
-                      <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white text-xs">
+                      <Button size="sm" className="bg-[#F57C20] hover:bg-[#E86E12] text-white text-xs">
                         Place Order
                       </Button>
                     </td>

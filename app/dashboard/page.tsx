@@ -64,14 +64,14 @@ const MetricCard = ({
   icon: any
   color: string
 }) => (
-  <Card className="bg-slate-800/50 border-slate-700">
+  <Card className="bg-white border-[#E0E0E0] hover:border-[#F57C20] transition-colors">
     <CardContent className="pt-6">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm font-medium text-slate-400 mb-1">{title}</p>
+          <p className="text-sm font-medium text-[#555555] mb-1">{title}</p>
           <div className="flex items-baseline gap-1">
-            <span className="text-3xl font-bold text-white">{value}</span>
-            <span className="text-sm text-slate-400">{unit}</span>
+            <span className="text-2xl sm:text-3xl font-bold text-[#333333]">{value}</span>
+            <span className="text-sm text-[#888888]">{unit}</span>
           </div>
         </div>
         <div className={`p-3 rounded-lg ${color}`}>
@@ -95,99 +95,101 @@ export default function DashboardHome() {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white mb-1">Dashboard</h1>
-        <p className="text-slate-400">AI-Driven Business Intelligence</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#333333] mb-1">Dashboard</h1>
+        <p className="text-[#555555]">AI-Driven Business Intelligence</p>
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           title="Projected Revenue Uplift"
           value={`${metricsData.revenue_uplift_pct}%`}
           unit="YoY"
           icon={TrendingUp}
-          color="bg-teal-500/20"
+          color="bg-[#F57C20]"
         />
         <MetricCard
           title="Stockout Risk Score"
           value={metricsData.stockout_risk_score}
           unit="/100"
           icon={AlertTriangle}
-          color="bg-orange-500/20"
+          color="bg-[#E74C3C]"
         />
         <MetricCard
           title="Chatbot Resolution Rate"
           value={`${metricsData.resolution_rate_pct}%`}
           unit="Success"
           icon={CheckCircle}
-          color="bg-green-500/20"
+          color="bg-[#34A853]"
         />
         <MetricCard
           title="Waste Reduction Target"
           value={`${metricsData.waste_reduction_target}%`}
           unit="Achieved"
           icon={Zap}
-          color="bg-blue-500/20"
+          color="bg-[#F57C20]"
         />
       </div>
 
       {/* Next Action Alert */}
-      <Alert className="bg-orange-500/10 border-orange-500/20 text-orange-400">
-        <AlertTriangle className="h-4 w-4" />
+      <Alert className="bg-[#FFF1E6] border-[#F57C20] text-[#333333]">
+        <AlertTriangle className="h-4 w-4 text-[#F57C20]" />
         <AlertDescription>
-          <strong>Inventory Alert:</strong> {metricsData.next_action_text}
-          <Button className="ml-4 h-7 text-xs bg-orange-600 hover:bg-orange-700" size="sm">
+          <strong className="text-[#F57C20]">Inventory Alert:</strong> {metricsData.next_action_text}
+          <Button className="ml-4 h-7 text-xs bg-[#F57C20] hover:bg-[#E86E12] text-white" size="sm">
             Take Action
           </Button>
         </AlertDescription>
       </Alert>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Demand Forecast */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="bg-white border-[#E0E0E0]">
           <CardHeader>
-            <CardTitle className="text-white">Demand Forecast Accuracy</CardTitle>
+            <CardTitle className="text-[#333333]">Demand Forecast Accuracy</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={demandForecastData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.1)" />
-                <XAxis stroke="rgb(148, 163, 184)" />
-                <YAxis stroke="rgb(148, 163, 184)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E0E0E0" />
+                <XAxis stroke="#555555" />
+                <YAxis stroke="#555555" />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "rgb(15, 23, 42)",
-                    border: "1px solid rgb(30, 41, 59)",
+                    backgroundColor: "white",
+                    border: "1px solid #E0E0E0",
+                    color: "#333333"
                   }}
                 />
                 <Legend />
-                <Bar dataKey="predicted" fill="#14b8a6" name="Predicted Sales" />
-                <Bar dataKey="actual" fill="#3b82f6" name="Actual Sales" />
+                <Bar dataKey="predicted" fill="#F57C20" name="Predicted Sales" />
+                <Bar dataKey="actual" fill="#4B4B4B" name="Actual Sales" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
         {/* Year-to-Date Revenue */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="bg-white border-[#E0E0E0]">
           <CardHeader>
-            <CardTitle className="text-white">Year-to-Date Revenue Trend</CardTitle>
+            <CardTitle className="text-[#333333]">Year-to-Date Revenue Trend</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.1)" />
-                <XAxis stroke="rgb(148, 163, 184)" />
-                <YAxis stroke="rgb(148, 163, 184)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E0E0E0" />
+                <XAxis stroke="#555555" />
+                <YAxis stroke="#555555" />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "rgb(15, 23, 42)",
-                    border: "1px solid rgb(30, 41, 59)",
+                    backgroundColor: "white",
+                    border: "1px solid #E0E0E0",
+                    color: "#333333"
                   }}
                   formatter={(value) => `$${(value as number).toLocaleString()}`}
                 />
-                <Line type="monotone" dataKey="revenue" stroke="#14b8a6" strokeWidth={3} dot={false} name="Revenue" />
+                <Line type="monotone" dataKey="revenue" stroke="#F57C20" strokeWidth={3} dot={false} name="Revenue" />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>

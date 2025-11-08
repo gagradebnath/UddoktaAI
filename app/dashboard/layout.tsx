@@ -49,28 +49,59 @@ export default function DashboardLayout({
   ]
 
   return (
-    <div className="flex h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-[#F9FAFB]">
+      {/* Mobile Menu Button - Only visible on mobile */}
+      <button
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md border border-[#E0E0E0]"
+        onClick={() => {
+          const sidebar = document.getElementById('sidebar');
+          if (sidebar) {
+            sidebar.classList.toggle('hidden');
+          }
+        }}
+      >
+        <svg className="w-6 h-6 text-[#4B4B4B]" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col">
-        <div className="p-6 border-b border-slate-800">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">⚡</span>
+      <aside id="sidebar" className="hidden lg:flex w-64 bg-white border-r border-[#E0E0E0] flex-col fixed lg:static h-full lg:h-screen z-40">
+        <div className="p-6 border-b border-[#E0E0E0]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-8 h-8 bg-[#F57C20] rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold">⚡</span>
+              </div>
+              <h1 className="text-lg font-bold text-[#333333]">Uddokta AI</h1>
             </div>
-            <h1 className="text-lg font-bold text-white">Uddokta AI</h1>
+            {/* Close button for mobile */}
+            <button 
+              className="lg:hidden p-2 text-[#4B4B4B]"
+              onClick={() => {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) {
+                  sidebar.classList.add('hidden');
+                }
+              }}
+            >
+              <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
           </div>
-          <p className="text-xs text-slate-400">SME Intelligence Platform</p>
+          <p className="text-xs text-[#555555]">SME Intelligence Platform</p>
         </div>
 
-        <nav className="flex-1 px-4 py-6 space-y-2">
+        <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href}>
               <Button
                 variant="ghost"
                 className={`w-full justify-start gap-2 transition-colors ${
                   isActive(item.href)
-                    ? "bg-teal-500/20 text-teal-400 hover:bg-teal-500/30"
-                    : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+                    ? "bg-[#FFD8B2] text-[#F57C20] hover:bg-[#FFD8B2]"
+                    : "text-[#4B4B4B] hover:text-[#F57C20] hover:bg-[#F9FAFB]"
                 }`}
               >
                 <item.icon className="w-4 h-4" />
@@ -80,23 +111,23 @@ export default function DashboardLayout({
           ))}
         </nav>
 
-        <div className="p-4 border-t border-slate-800">
-          <p className="text-xs text-slate-500 mb-2">Logged in as</p>
-          <p className="text-sm font-medium text-white truncate">{user.businessName}</p>
+        <div className="p-4 border-t border-[#E0E0E0]">
+          <p className="text-xs text-[#888888] mb-2">Logged in as</p>
+          <p className="text-sm font-medium text-[#333333] truncate">{user.businessName}</p>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col bg-slate-950">
+      <div className="flex-1 flex flex-col lg:ml-0 w-full">
         {/* Header */}
-        <header className="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6">
-          <div>
-            <h2 className="text-lg font-semibold text-white">{user.businessName}</h2>
-            <p className="text-xs text-slate-400">{user.type} Business</p>
+        <header className="h-16 bg-white border-b border-[#E0E0E0] flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30">
+          <div className="ml-12 lg:ml-0">
+            <h2 className="text-base sm:text-lg font-semibold text-[#333333]">{user.businessName}</h2>
+            <p className="text-xs text-[#555555]">{user.type} Business</p>
           </div>
 
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white hover:bg-slate-800">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Button variant="ghost" size="icon" className="text-[#4B4B4B] hover:text-[#F57C20] hover:bg-[#F9FAFB]">
               <Bell className="w-5 h-5" />
             </Button>
 
@@ -105,21 +136,21 @@ export default function DashboardLayout({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-slate-400 hover:text-white hover:bg-slate-800 rounded-full"
+                  className="text-[#4B4B4B] hover:text-[#F57C20] hover:bg-[#F9FAFB] rounded-full"
                 >
-                  <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                  <div className="w-8 h-8 bg-[#F57C20] rounded-full flex items-center justify-center text-white text-sm font-bold">
                     {user.name?.[0]?.toUpperCase()}
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-slate-900 border-slate-800">
-                <DropdownMenuItem className="text-slate-300 cursor-pointer hover:text-white hover:bg-slate-800">
+              <DropdownMenuContent align="end" className="bg-white border-[#E0E0E0]">
+                <DropdownMenuItem className="text-[#555555] cursor-pointer hover:text-[#333333] hover:bg-[#F9FAFB]">
                   <Settings className="w-4 h-4 mr-2" />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="text-red-400 cursor-pointer hover:text-red-300 hover:bg-slate-800"
+                  className="text-[#E74C3C] cursor-pointer hover:text-[#C0392B] hover:bg-[#F9FAFB]"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
                   Logout
@@ -130,7 +161,7 @@ export default function DashboardLayout({
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        <main className="flex-1 overflow-auto p-4 sm:p-6">{children}</main>
       </div>
     </div>
   )

@@ -119,21 +119,21 @@ export default function MarketingPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white mb-1">Marketing AI</h1>
-        <p className="text-slate-400">AI-powered content generation and social media posting</p>
+        <h1 className="text-3xl font-bold text-[#333333] mb-1">Marketing AI</h1>
+        <p className="text-[#555555]">AI-powered content generation and social media posting</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           {/* Content Generation */}
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-white border-gray-200">
             <CardHeader>
-              <CardTitle className="text-white">AI Content Generator</CardTitle>
+              <CardTitle className="text-[#333333]">AI Content Generator</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="prompt" className="text-slate-300">
+                <Label htmlFor="prompt" className="text-[#333333]">
                   What would you like to promote?
                 </Label>
                 <Textarea
@@ -141,13 +141,13 @@ export default function MarketingPage() {
                   placeholder="E.g., Promote our new coffee blend to young professionals..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  className="bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 min-h-20"
+                  className="bg-white border-gray-300 text-[#333333] placeholder-gray-400 min-h-20"
                 />
               </div>
               <Button
                 onClick={handleGeneratePost}
                 disabled={!prompt || isGenerating}
-                className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-semibold"
+                className="w-full bg-[#F57C20] hover:bg-[#E06D1A] text-white font-semibold"
               >
                 <Send className="w-4 h-4 mr-2" />
                 {isGenerating ? "Generating..." : "Generate Post"}
@@ -157,28 +157,28 @@ export default function MarketingPage() {
 
           {/* Generated Post Preview */}
           {generatedPost && (
-            <Card className="bg-slate-800/50 border-slate-700">
+            <Card className="bg-white border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white">Generated Social Media Post</CardTitle>
+                <CardTitle className="text-[#333333]">Generated Social Media Post</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{generatedPost.title}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">{generatedPost.body}</p>
+                  <h3 className="text-lg font-semibold text-[#333333] mb-2">{generatedPost.title}</h3>
+                  <p className="text-[#555555] text-sm leading-relaxed">{generatedPost.body}</p>
                 </div>
                 <div>
-                  <p className="text-teal-400 text-sm">{generatedPost.hashtags}</p>
+                  <p className="text-[#F57C20] text-sm">{generatedPost.hashtags}</p>
                 </div>
-                <div className="bg-slate-700/30 p-4 rounded-lg border border-slate-600">
-                  <p className="text-xs text-slate-400 text-center">AI-Generated Graphic Preview</p>
-                  <div className="w-full h-32 bg-gradient-to-br from-teal-500/20 to-blue-500/20 rounded mt-2 flex items-center justify-center">
-                    <span className="text-slate-500">Image will be generated here</span>
+                <div className="bg-[#F9FAFB] p-4 rounded-lg border border-gray-200">
+                  <p className="text-xs text-[#555555] text-center">AI-Generated Graphic Preview</p>
+                  <div className="w-full h-32 bg-[#FFF1E6] rounded mt-2 flex items-center justify-center">
+                    <span className="text-[#555555]">Image will be generated here</span>
                   </div>
                 </div>
 
                 {/* Social Media Platform Selection */}
-                <div className="border-t border-slate-700 pt-4">
-                  <Label className="text-slate-300 mb-3 block">Select platforms to post to:</Label>
+                <div className="border-t border-gray-200 pt-4">
+                  <Label className="text-[#333333] mb-3 block">Select platforms to post to:</Label>
                   <div className="grid grid-cols-2 gap-3">
                     {socialMediaAccounts.map((account) => (
                       <button
@@ -187,15 +187,15 @@ export default function MarketingPage() {
                         disabled={!account.connected}
                         className={`p-3 rounded-lg border-2 transition-all ${
                           selectedPlatforms.includes(account.platform)
-                            ? "border-teal-500 bg-teal-500/10"
-                            : "border-slate-600 bg-slate-700/30"
-                        } ${!account.connected ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:border-teal-400"}`}
+                            ? "border-[#F57C20] bg-[#FFF1E6]"
+                            : "border-gray-200 bg-white"
+                        } ${!account.connected ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:border-[#F57C20]/50"}`}
                       >
                         <div className="flex items-center gap-2">
-                          <account.icon className="w-4 h-4" />
+                          <account.icon className="w-4 h-4 text-[#333333]" />
                           <div className="text-left">
-                            <p className="text-sm font-medium text-white">{account.platform}</p>
-                            <p className="text-xs text-slate-400">{account.handle}</p>
+                            <p className="text-sm font-medium text-[#333333]">{account.platform}</p>
+                            <p className="text-xs text-[#555555]">{account.handle}</p>
                           </div>
                         </div>
                       </button>
@@ -207,7 +207,7 @@ export default function MarketingPage() {
                 <Button
                   onClick={handlePostToSocialMedia}
                   disabled={selectedPlatforms.length === 0 || isPosting}
-                  className="w-full mt-4 bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold"
+                  className="w-full mt-4 bg-[#F57C20] hover:bg-[#E06D1A] text-white font-semibold"
                 >
                   {isPosting
                     ? "Posting..."
@@ -221,51 +221,51 @@ export default function MarketingPage() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Trend Analysis */}
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-white border-gray-200">
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-teal-400" />
+              <CardTitle className="text-[#333333] flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-[#F57C20]" />
                 Top Selling Categories
               </CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={trendData} layout="vertical" margin={{ left: 80 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.1)" />
-                  <XAxis type="number" stroke="rgb(148, 163, 184)" />
-                  <YAxis dataKey="category" type="category" stroke="rgb(148, 163, 184)" tick={{ fontSize: 12 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(229, 231, 235, 1)" />
+                  <XAxis type="number" stroke="rgb(85, 85, 85)" />
+                  <YAxis dataKey="category" type="category" stroke="rgb(85, 85, 85)" tick={{ fontSize: 12 }} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "rgb(15, 23, 42)",
-                      border: "1px solid rgb(30, 41, 59)",
+                      backgroundColor: "rgb(255, 255, 255)",
+                      border: "1px solid rgb(229, 231, 235)",
                     }}
                   />
-                  <Bar dataKey="sales" fill="#14b8a6" />
+                  <Bar dataKey="sales" fill="#F57C20" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
 
           {/* Optimal Posting Times */}
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-white border-gray-200">
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Clock className="w-4 h-4 text-blue-400" />
+              <CardTitle className="text-[#333333] flex items-center gap-2">
+                <Clock className="w-4 h-4 text-[#F57C20]" />
                 Optimal Posting Times
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {optimalPostingTimes.map((slot, idx) => (
-                <div key={idx} className="flex justify-between items-center text-sm border-b border-slate-700 pb-2">
+                <div key={idx} className="flex justify-between items-center text-sm border-b border-gray-200 pb-2">
                   <div>
-                    <p className="text-white font-medium">{slot.day}</p>
-                    <p className="text-slate-400 text-xs">{slot.time}</p>
+                    <p className="text-[#333333] font-medium">{slot.day}</p>
+                    <p className="text-[#555555] text-xs">{slot.time}</p>
                   </div>
                   <span
                     className={`text-xs font-semibold px-2 py-1 rounded ${
                       slot.engagement === "Very High"
-                        ? "bg-green-500/20 text-green-400"
-                        : "bg-blue-500/20 text-blue-400"
+                        ? "bg-green-100 text-green-600"
+                        : "bg-[#FFF1E6] text-[#F57C20]"
                     }`}
                   >
                     {slot.engagement}
@@ -278,44 +278,44 @@ export default function MarketingPage() {
       </div>
 
       {/* Posting History Section */}
-      <Card className="bg-slate-800/50 border-slate-700">
+      <Card className="bg-white border-gray-200">
         <CardHeader>
-          <CardTitle className="text-white">Recent Posts</CardTitle>
+          <CardTitle className="text-[#333333]">Recent Posts</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             {postingHistory.map((post) => (
               <div
                 key={post.id}
-                className="flex items-start justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600"
+                className="flex items-start justify-between p-3 bg-[#F9FAFB] rounded-lg border border-gray-200"
               >
                 <div className="flex-1">
-                  <p className="text-white font-medium">{post.title}</p>
+                  <p className="text-[#333333] font-medium">{post.title}</p>
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
                     {post.platforms.map((platform) => (
-                      <span key={platform} className="text-xs bg-teal-500/20 text-teal-400 px-2 py-1 rounded">
+                      <span key={platform} className="text-xs bg-[#FFF1E6] text-[#F57C20] px-2 py-1 rounded">
                         {platform}
                       </span>
                     ))}
                   </div>
-                  <p className="text-xs text-slate-400 mt-2">{post.postedAt}</p>
+                  <p className="text-xs text-[#555555] mt-2">{post.postedAt}</p>
                 </div>
                 <div className="text-right ml-4">
                   <div className="flex items-center gap-1 justify-end mb-2">
                     {post.status === "posted" ? (
-                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <CheckCircle className="w-4 h-4 text-green-500" />
                     ) : (
-                      <Clock3 className="w-4 h-4 text-yellow-400" />
+                      <Clock3 className="w-4 h-4 text-yellow-500" />
                     )}
                     <span
-                      className={`text-xs font-semibold ${post.status === "posted" ? "text-green-400" : "text-yellow-400"}`}
+                      className={`text-xs font-semibold ${post.status === "posted" ? "text-green-500" : "text-yellow-500"}`}
                     >
                       {post.status === "posted" ? "Posted" : "Scheduled"}
                     </span>
                   </div>
                   {post.engagement && (
-                    <p className="text-sm text-slate-300">
-                      <span className="text-teal-400 font-semibold">{post.engagement}</span> engagements
+                    <p className="text-sm text-[#555555]">
+                      <span className="text-[#F57C20] font-semibold">{post.engagement}</span> engagements
                     </p>
                   )}
                 </div>

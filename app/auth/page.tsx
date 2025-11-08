@@ -64,29 +64,29 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#F9FAFB] flex items-center justify-center p-4">
       {/* Background accent */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#FFD8B2]/20 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#F57C20]/10 rounded-full blur-3xl -z-10" />
 
-      <Card className="w-full max-w-md shadow-2xl border-slate-700 bg-slate-950/50 backdrop-blur">
+      <Card className="w-full max-w-md shadow-2xl border-[#E0E0E0] bg-white backdrop-blur">
         <CardHeader className="space-y-2 text-center">
           <div className="flex justify-center mb-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-[#F57C20] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">⚡</span>
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold text-white">Uddokta AI</CardTitle>
-          <CardDescription className="text-slate-400">Start Your Autonomous Business</CardDescription>
+          <CardTitle className="text-2xl font-bold text-[#333333]">Uddokta AI</CardTitle>
+          <CardDescription className="text-[#555555]">Start Your Autonomous Business</CardDescription>
         </CardHeader>
 
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-slate-800/50">
-              <TabsTrigger value="login" className="text-slate-300">
+            <TabsList className="grid w-full grid-cols-2 bg-[#F9FAFB]">
+              <TabsTrigger value="login" className="text-[#555555] data-[state=active]:bg-white data-[state=active]:text-[#F57C20]">
                 Login
               </TabsTrigger>
-              <TabsTrigger value="signup" className="text-slate-300">
+              <TabsTrigger value="signup" className="text-[#555555] data-[state=active]:bg-white data-[state=active]:text-[#F57C20]">
                 Sign Up
               </TabsTrigger>
             </TabsList>
@@ -95,7 +95,7 @@ export default function AuthPage() {
             <TabsContent value="login" className="space-y-4 mt-6">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="login-email" className="text-slate-300">
+                  <Label htmlFor="login-email" className="text-[#333333]">
                     Email
                   </Label>
                   <Input
@@ -104,12 +104,12 @@ export default function AuthPage() {
                     placeholder="name@example.com"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
-                    className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500"
+                    className="bg-white border-[#E0E0E0] text-[#333333] placeholder-[#888888]"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="login-password" className="text-slate-300">
+                  <Label htmlFor="login-password" className="text-[#333333]">
                     Password
                   </Label>
                   <Input
@@ -118,13 +118,13 @@ export default function AuthPage() {
                     placeholder="••••••••"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                    className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500"
+                    className="bg-white border-[#E0E0E0] text-[#333333] placeholder-[#888888]"
                     required
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-semibold"
+                  className="w-full bg-[#F57C20] hover:bg-[#E86E12] text-white font-semibold"
                   disabled={isLoading}
                 >
                   {isLoading ? "Signing in..." : "Sign In"}
@@ -136,7 +136,7 @@ export default function AuthPage() {
             <TabsContent value="signup" className="space-y-4 mt-6">
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signup-name" className="text-slate-300">
+                  <Label htmlFor="signup-name" className="text-[#333333]">
                     Business Name
                   </Label>
                   <Input
@@ -145,12 +145,12 @@ export default function AuthPage() {
                     placeholder="Your Business Name"
                     value={signupName}
                     onChange={(e) => setSignupName(e.target.value)}
-                    className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500"
+                    className="bg-white border-[#E0E0E0] text-[#333333] placeholder-[#888888]"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email" className="text-slate-300">
+                  <Label htmlFor="signup-email" className="text-[#333333]">
                     Email
                   </Label>
                   <Input
@@ -159,12 +159,12 @@ export default function AuthPage() {
                     placeholder="name@example.com"
                     value={signupEmail}
                     onChange={(e) => setSignupEmail(e.target.value)}
-                    className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500"
+                    className="bg-white border-[#E0E0E0] text-[#333333] placeholder-[#888888]"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password" className="text-slate-300">
+                  <Label htmlFor="signup-password" className="text-[#333333]">
                     Password
                   </Label>
                   <Input
@@ -173,19 +173,19 @@ export default function AuthPage() {
                     placeholder="••••••••"
                     value={signupPassword}
                     onChange={(e) => setSignupPassword(e.target.value)}
-                    className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500"
+                    className="bg-white border-[#E0E0E0] text-[#333333] placeholder-[#888888]"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="sme-type" className="text-slate-300">
+                  <Label htmlFor="sme-type" className="text-[#333333]">
                     Business Type
                   </Label>
                   <Select value={signupSMEType} onValueChange={setSignupSMEType}>
-                    <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white">
+                    <SelectTrigger className="bg-white border-[#E0E0E0] text-[#333333]">
                       <SelectValue placeholder="Select business type" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700">
+                    <SelectContent className="bg-white border-[#E0E0E0]">
                       <SelectItem value="Retail">Retail</SelectItem>
                       <SelectItem value="F&B">Food & Beverage</SelectItem>
                       <SelectItem value="Manufacturing">Manufacturing</SelectItem>
@@ -196,7 +196,7 @@ export default function AuthPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-semibold"
+                  className="w-full bg-[#F57C20] hover:bg-[#E86E12] text-white font-semibold"
                   disabled={isLoading || !signupSMEType}
                 >
                   {isLoading ? "Creating Account..." : "Create Account"}

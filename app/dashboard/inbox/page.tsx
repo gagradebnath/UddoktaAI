@@ -203,15 +203,15 @@ export default function InboxPage() {
   const getPlatformColor = (platform: string) => {
     switch (platform) {
       case "whatsapp":
-        return "bg-green-500/20 text-green-300 border-green-500/50"
+        return "bg-[#34A853]/20 text-[#34A853] border-[#34A853]/50"
       case "messenger":
-        return "bg-blue-500/20 text-blue-300 border-blue-500/50"
+        return "bg-[#F57C20]/20 text-[#F57C20] border-[#F57C20]/50"
       case "instagram":
-        return "bg-pink-500/20 text-pink-300 border-pink-500/50"
+        return "bg-[#E74C3C]/20 text-[#E74C3C] border-[#E74C3C]/50"
       case "email":
-        return "bg-slate-500/20 text-slate-300 border-slate-500/50"
+        return "bg-[#4B4B4B]/20 text-[#555555] border-[#4B4B4B]/50"
       default:
-        return "bg-slate-500/20 text-slate-300 border-slate-500/50"
+        return "bg-[#4B4B4B]/20 text-[#555555] border-[#4B4B4B]/50"
     }
   }
 
@@ -222,16 +222,16 @@ export default function InboxPage() {
   )
 
   return (
-    <div className="h-full flex gap-6">
+    <div className="h-full flex flex-col lg:flex-row gap-4 lg:gap-6">
       {/* Conversations List */}
-      <div className="w-80 flex flex-col bg-slate-900 rounded-lg border border-slate-800 overflow-hidden">
-        <div className="p-4 border-b border-slate-800">
-          <h2 className="text-lg font-semibold text-white mb-4">Messages</h2>
+      <div className="w-full lg:w-80 flex flex-col bg-white rounded-lg border border-[#E0E0E0] overflow-hidden">
+        <div className="p-4 border-b border-[#E0E0E0]">
+          <h2 className="text-lg font-semibold text-[#333333] mb-4">Messages</h2>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#888888]" />
             <Input
               placeholder="Search conversations..."
-              className="pl-10 bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+              className="pl-10 bg-white border-[#E0E0E0] text-[#333333] placeholder:text-[#888888]"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -243,28 +243,28 @@ export default function InboxPage() {
             <button
               key={conv.id}
               onClick={() => setSelectedConversation(conv)}
-              className={`w-full px-4 py-3 border-b border-slate-800 text-left transition-colors hover:bg-slate-800/50 ${
-                selectedConversation.id === conv.id ? "bg-slate-800 border-l-2 border-l-teal-500" : ""
+              className={`w-full px-4 py-3 border-b border-[#E0E0E0] text-left transition-colors hover:bg-[#F9FAFB] ${
+                selectedConversation.id === conv.id ? "bg-[#FFF1E6] border-l-2 border-l-[#F57C20]" : ""
               }`}
             >
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm font-bold">
+                <div className="w-10 h-10 bg-[#F57C20] rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm font-bold">
                   {conv.customerImage}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-semibold text-white truncate">{conv.customerName}</h3>
+                    <h3 className="font-semibold text-[#333333] truncate">{conv.customerName}</h3>
                     <span className={`text-xs px-2 py-1 rounded-full border ${getPlatformColor(conv.platform)}`}>
                       {conv.platform}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-400 truncate">{conv.lastMessage}</p>
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-sm text-[#555555] truncate">{conv.lastMessage}</p>
+                  <p className="text-xs text-[#888888] mt-1">
                     {Math.floor((Date.now() - conv.lastMessageTime.getTime()) / 60000)}m ago
                   </p>
                 </div>
                 {conv.unread > 0 && (
-                  <span className="w-5 h-5 bg-teal-500 text-white text-xs rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="w-5 h-5 bg-[#F57C20] text-white text-xs rounded-full flex items-center justify-center flex-shrink-0">
                     {conv.unread}
                   </span>
                 )}
@@ -275,15 +275,15 @@ export default function InboxPage() {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-slate-900 rounded-lg border border-slate-800 overflow-hidden">
+      <div className="flex-1 flex flex-col bg-white rounded-lg border border-[#E0E0E0] overflow-hidden">
         {/* Chat Header */}
-        <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-4 border-b border-[#E0E0E0] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+            <div className="w-12 h-12 bg-[#F57C20] rounded-full flex items-center justify-center text-white font-bold">
               {selectedConversation.customerImage}
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-white">{selectedConversation.customerName}</h2>
+              <h2 className="text-lg font-semibold text-[#333333]">{selectedConversation.customerName}</h2>
               <span
                 className={`text-xs px-2 py-1 rounded-full border ${getPlatformColor(selectedConversation.platform)}`}
               >
@@ -300,8 +300,8 @@ export default function InboxPage() {
               variant={selectedConversation.aiEnabled ? "default" : "outline"}
               className={`${
                 selectedConversation.aiEnabled
-                  ? "bg-teal-500/20 border-teal-500/50 text-teal-300 hover:bg-teal-500/30"
-                  : "border-slate-700 text-slate-400 hover:text-white"
+                  ? "bg-[#F57C20]/20 border-[#F57C20]/50 text-[#F57C20] hover:bg-[#F57C20]/30"
+                  : "border-[#E0E0E0] text-[#555555] hover:text-[#333333]"
               }`}
             >
               {selectedConversation.aiEnabled ? (
@@ -316,7 +316,7 @@ export default function InboxPage() {
                 </>
               )}
             </Button>
-            <Button size="sm" variant="ghost" className="text-slate-400 hover:text-white hover:bg-slate-800">
+            <Button size="sm" variant="ghost" className="text-[#555555] hover:text-[#333333] hover:bg-[#F9FAFB]">
               <Settings2 className="w-4 h-4" />
             </Button>
           </div>
@@ -333,30 +333,30 @@ export default function InboxPage() {
               >
                 <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
                   {msg.sender === "customer" ? (
-                    <div className="w-6 h-6 bg-slate-700 rounded-full flex items-center justify-center text-white text-xs">
+                    <div className="w-6 h-6 bg-[#E0E0E0] rounded-full flex items-center justify-center text-[#333333] text-xs">
                       {selectedConversation.customerImage[0]}
                     </div>
                   ) : msg.sender === "bot" ? (
-                    <div className="w-6 h-6 bg-teal-500/20 border border-teal-500/50 rounded-full flex items-center justify-center">
-                      <Bot className="w-3 h-3 text-teal-300" />
+                    <div className="w-6 h-6 bg-[#F57C20]/20 border border-[#F57C20]/50 rounded-full flex items-center justify-center">
+                      <Bot className="w-3 h-3 text-[#F57C20]" />
                     </div>
                   ) : (
-                    <div className="w-6 h-6 bg-blue-500/20 border border-blue-500/50 rounded-full flex items-center justify-center">
-                      <User className="w-3 h-3 text-blue-300" />
+                    <div className="w-6 h-6 bg-[#4B4B4B]/20 border border-[#4B4B4B]/50 rounded-full flex items-center justify-center">
+                      <User className="w-3 h-3 text-[#4B4B4B]" />
                     </div>
                   )}
                 </div>
                 <div
                   className={`rounded-lg px-4 py-2 ${
                     msg.sender === "customer"
-                      ? "bg-slate-800 text-slate-100 border border-slate-700"
+                      ? "bg-[#F9FAFB] text-[#333333] border border-[#E0E0E0]"
                       : msg.sender === "bot"
-                        ? "bg-teal-500/20 text-teal-100 border border-teal-500/50"
-                        : "bg-blue-500/20 text-blue-100 border border-blue-500/50"
+                        ? "bg-[#F57C20]/20 text-[#333333] border border-[#F57C20]/50"
+                        : "bg-[#4B4B4B]/20 text-[#333333] border border-[#4B4B4B]/50"
                   }`}
                 >
                   <p className="text-sm break-words">{msg.text}</p>
-                  <p className={`text-xs mt-1 ${msg.sender === "customer" ? "text-slate-500" : ""}`}>
+                  <p className={`text-xs mt-1 ${msg.sender === "customer" ? "text-[#888888]" : "text-[#888888]"}`}>
                     {msg.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </p>
                 </div>
@@ -367,9 +367,9 @@ export default function InboxPage() {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 border-t border-slate-800 space-y-3">
+        <div className="p-4 border-t border-[#E0E0E0] space-y-3">
           {selectedConversation.aiEnabled && (
-            <p className="text-xs text-teal-300 bg-teal-500/10 border border-teal-500/30 px-3 py-2 rounded">
+            <p className="text-xs text-[#F57C20] bg-[#F57C20]/10 border border-[#F57C20]/30 px-3 py-2 rounded">
               💡 AI Reply Mode is ON. Messages will be sent with AI assistance.
             </p>
           )}
@@ -385,12 +385,12 @@ export default function InboxPage() {
                   handleSendMessage(false)
                 }
               }}
-              className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+              className="bg-white border-[#E0E0E0] text-[#333333] placeholder:text-[#888888]"
             />
             <Button
               onClick={() => handleSendMessage(false)}
               size="icon"
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-[#4B4B4B] hover:bg-[#333333] text-white"
               title="Send manual reply"
             >
               <User className="w-4 h-4" />
@@ -399,7 +399,7 @@ export default function InboxPage() {
               <Button
                 onClick={() => handleSendMessage(true)}
                 size="icon"
-                className="bg-teal-600 hover:bg-teal-700 text-white"
+                className="bg-[#F57C20] hover:bg-[#E86E12] text-white"
                 title="Send AI-powered reply"
               >
                 <Bot className="w-4 h-4" />
@@ -407,7 +407,7 @@ export default function InboxPage() {
             )}
           </div>
 
-          <div className="text-xs text-slate-400 space-y-1">
+          <div className="text-xs text-[#888888] space-y-1">
             <p>• Click the AI button to send an intelligent response</p>
             <p>• Click the Manual button to send a regular reply</p>
             <p>• Toggle AI mode to pause/resume automatic replies</p>
