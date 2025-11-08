@@ -59,6 +59,8 @@ export default function DashboardLayout({
             sidebar.classList.toggle('hidden');
           }
         }}
+        aria-label="Open menu"
+        title="Open navigation menu"
       >
         <svg className="w-6 h-6 text-[#4B4B4B]" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M4 6h16M4 12h16M4 18h16"></path>
@@ -86,6 +88,8 @@ export default function DashboardLayout({
                   sidebar.classList.add('hidden');
                 }
               }}
+              aria-label="Close menu"
+              title="Close navigation menu"
             >
               <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M6 18L18 6M6 6l12 12"></path>

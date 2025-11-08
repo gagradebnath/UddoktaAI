@@ -88,25 +88,46 @@ export default function SettingsPage() {
         <CardContent className="space-y-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 rounded-lg bg-[#F9FAFB] border border-gray-200">
-              <div>
+              <label htmlFor="inventory-alerts" className="flex-1 cursor-pointer">
                 <p className="text-[#333333] font-medium">Inventory Alerts</p>
                 <p className="text-sm text-[#555555]">Get notified about low stock</p>
-              </div>
-              <input type="checkbox" defaultChecked className="w-4 h-4 cursor-pointer" />
+              </label>
+              <input 
+                id="inventory-alerts"
+                type="checkbox" 
+                defaultChecked 
+                className="w-4 h-4 cursor-pointer"
+                aria-label="Enable inventory alerts"
+                title="Toggle inventory alerts"
+              />
             </div>
             <div className="flex items-center justify-between p-4 rounded-lg bg-[#F9FAFB] border border-gray-200">
-              <div>
+              <label htmlFor="marketing-insights" className="flex-1 cursor-pointer">
                 <p className="text-[#333333] font-medium">Marketing Insights</p>
                 <p className="text-sm text-[#555555]">Receive daily marketing recommendations</p>
-              </div>
-              <input type="checkbox" defaultChecked className="w-4 h-4 cursor-pointer" />
+              </label>
+              <input 
+                id="marketing-insights"
+                type="checkbox" 
+                defaultChecked 
+                className="w-4 h-4 cursor-pointer"
+                aria-label="Enable marketing insights"
+                title="Toggle marketing insights"
+              />
             </div>
             <div className="flex items-center justify-between p-4 rounded-lg bg-[#F9FAFB] border border-gray-200">
-              <div>
+              <label htmlFor="customer-support-automation" className="flex-1 cursor-pointer">
                 <p className="text-[#333333] font-medium">Customer Support Automation</p>
                 <p className="text-sm text-[#555555]">Enable AI chatbot responses</p>
-              </div>
-              <input type="checkbox" defaultChecked className="w-4 h-4 cursor-pointer" />
+              </label>
+              <input 
+                id="customer-support-automation"
+                type="checkbox" 
+                defaultChecked 
+                className="w-4 h-4 cursor-pointer"
+                aria-label="Enable customer support automation"
+                title="Toggle customer support automation"
+              />
             </div>
           </div>
           <Button className="bg-[#F57C20] hover:bg-[#E06D1A] text-white">Save Preferences</Button>
