@@ -404,7 +404,7 @@ export default function InboxPage() {
 
           <div className="flex gap-2">
             <Input
-              placeholder="Type your reply..."
+              placeholder={t('inbox.typeMessage')}
               value={messageText}
               onChange={(e) => setMessageText(e.target.value)}
               onKeyPress={(e) => {
@@ -419,7 +419,7 @@ export default function InboxPage() {
               onClick={() => handleSendMessage(false)}
               size="icon"
               className="bg-[#4B4B4B] hover:bg-[#333333] text-white"
-              title="Send manual reply"
+              title={t('inbox.sendMessage')}
             >
               <User className="w-4 h-4" />
             </Button>
@@ -428,7 +428,7 @@ export default function InboxPage() {
                 onClick={() => handleSendMessage(true)}
                 size="icon"
                 className="bg-[#F57C20] hover:bg-[#E86E12] text-white"
-                title="Send AI-powered reply"
+                title={t('inbox.sendWithAI')}
               >
                 <Bot className="w-4 h-4" />
               </Button>
