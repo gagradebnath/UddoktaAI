@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
+import { LanguageProvider } from "@/contexts/LanguageContext"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -27,7 +28,9 @@ export default function RootLayout({
         This is a low-risk, local fix — prefer removing non-deterministic server/client
         behaviors for the long term (Date.now(), Math.random, conditional window checks, etc.).
       */}
-      <body suppressHydrationWarning className={`font-sans antialiased`}>{children}</body>
+      <body suppressHydrationWarning className={`font-sans antialiased`}>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   )
 }

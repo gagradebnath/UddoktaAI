@@ -3,8 +3,13 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowRight, BarChart3, Brain, MessageSquare, TrendingUp, Shield, Zap } from "lucide-react"
+import { useLanguage } from "@/contexts/LanguageContext"
+import { LanguageSwitcher } from "@/components/LanguageSwitcher"
+
 
 export default function LandingPage() {
+  const { t } = useLanguage()
+  
   return (
     <div className="min-h-screen bg-[#F9FAFB] text-[#333333]">
       {/* Navigation */}
@@ -18,9 +23,12 @@ export default function LandingPage() {
             />
             <span className="text-xl font-bold text-[#333333]"></span>
           </div>
-          <Link href="/auth">
-            <Button className="bg-[#F57C20] hover:bg-[#E86E12] text-white font-semibold">Get Started</Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+            <Link href="/auth">
+              <Button className="bg-[#F57C20] hover:bg-[#E86E12] text-white font-semibold">{t('nav.getStarted')}</Button>
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -29,11 +37,10 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="space-y-6">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-[#333333] text-balance">
-              Get started with Uddokta AI
+              {t('hero.title')}
             </h1>
             <p className="text-base sm:text-lg text-[#555555] max-w-xl text-balance leading-relaxed">
-              By using Uddokta AI, you can access intelligent business insights across your entire operation. Connect
-              with customers, track performance metrics, and grow your business faster with AI-powered recommendations.
+              {t('hero.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link href="/auth" className="w-full sm:w-auto">
@@ -41,7 +48,7 @@ export default function LandingPage() {
                   size="lg"
                   className="w-full sm:w-auto bg-[#F57C20] hover:bg-[#E86E12] text-white font-semibold text-base"
                 >
-                  Start Free Trial <ArrowRight className="ml-2 w-5 h-5" />
+                  {t('hero.startFreeTrial')} <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
               <Button
@@ -49,10 +56,10 @@ export default function LandingPage() {
                 variant="outline"
                 className="w-full sm:w-auto border-[#F57C20] text-[#F57C20] hover:bg-[#FFF1E6] bg-transparent"
               >
-                Watch Demo
+                {t('nav.watchDemo')}
               </Button>
             </div>
-            <p className="text-sm text-[#888888]">14 days free • No credit card required • Cancel anytime</p>
+            <p className="text-sm text-[#888888]">{t('hero.freeTrialInfo')}</p>
           </div>
           {/* Hero Illustration Placeholder */}
           <div className="rounded-2xl h-64 sm:h-80 lg:h-96 overflow-hidden shadow-lg">
@@ -68,45 +75,42 @@ export default function LandingPage() {
       {/* Our Business Tools Section */}
       <section className="bg-white py-12 sm:py-20 lg:py-28 border-t border-[#E0E0E0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-[#333333]">Our business tools can help you:</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-[#333333]">{t('businessTools.title')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
             <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E0E0E0] hover:border-[#F57C20] transition-colors">
-              <h3 className="text-lg font-bold text-[#333333] mb-3">Increase Revenue</h3>
+              <h3 className="text-lg font-bold text-[#333333] mb-3">{t('businessTools.increaseRevenue.title')}</h3>
               <p className="text-[#555555]">
-                Get AI-driven insights to identify growth opportunities, optimize pricing, and maximize sales across all
-                channels.
+                {t('businessTools.increaseRevenue.description')}
               </p>
             </div>
             <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E0E0E0] hover:border-[#F57C20] transition-colors">
-              <h3 className="text-lg font-bold text-[#333333] mb-3">Connect Across Platforms</h3>
+              <h3 className="text-lg font-bold text-[#333333] mb-3">{t('businessTools.connectPlatforms.title')}</h3>
               <p className="text-[#555555]">
-                Manage customer conversations from Facebook, WhatsApp, Instagram, and Email in one unified inbox.
+                {t('businessTools.connectPlatforms.description')}
               </p>
             </div>
             <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E0E0E0] hover:border-[#F57C20] transition-colors">
-              <h3 className="text-lg font-bold text-[#333333] mb-3">Track Performance Insights</h3>
+              <h3 className="text-lg font-bold text-[#333333] mb-3">{t('businessTools.trackPerformance.title')}</h3>
               <p className="text-[#555555]">
-                Monitor KPIs, revenue trends, and engagement metrics across your entire business in real-time
-                dashboards.
+                {t('businessTools.trackPerformance.description')}
               </p>
             </div>
             <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E0E0E0] hover:border-[#F57C20] transition-colors">
-              <h3 className="text-lg font-bold text-[#333333] mb-3">Automate Marketing</h3>
+              <h3 className="text-lg font-bold text-[#333333] mb-3">{t('businessTools.automateMarketing.title')}</h3>
               <p className="text-[#555555]">
-                Generate engaging social media content, optimize posting times, and reach your audience automatically.
+                {t('businessTools.automateMarketing.description')}
               </p>
             </div>
             <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E0E0E0] hover:border-[#F57C20] transition-colors">
-              <h3 className="text-lg font-bold text-[#333333] mb-3">Optimize Operations</h3>
+              <h3 className="text-lg font-bold text-[#333333] mb-3">{t('businessTools.optimizeOperations.title')}</h3>
               <p className="text-[#555555]">
-                Predict demand, prevent stockouts, reduce waste, and streamline inventory management with AI
-                forecasting.
+                {t('businessTools.optimizeOperations.description')}
               </p>
             </div>
             <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E0E0E0] hover:border-[#F57C20] transition-colors">
-              <h3 className="text-lg font-bold text-[#333333] mb-3">Save Time & Cost</h3>
+              <h3 className="text-lg font-bold text-[#333333] mb-3">{t('businessTools.scaleGlobally.title')}</h3>
               <p className="text-[#555555]">
-                Let AI handle repetitive tasks so your team can focus on strategic decisions and business growth.
+                {t('businessTools.scaleGlobally.description')}
               </p>
             </div>
           </div>
@@ -209,9 +213,9 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="py-12 sm:py-20 lg:py-28 bg-white border-t border-[#E0E0E0]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#333333] mb-4 sm:mb-6">Ready to grow your business?</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#333333] mb-4 sm:mb-6">{t('cta.title')}</h2>
           <p className="text-base sm:text-lg text-[#555555] mb-6 sm:mb-8 max-w-2xl mx-auto">
-            Join hundreds of SMEs already using Uddokta AI to make smarter decisions and accelerate growth.
+            {t('cta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/auth" className="w-full sm:w-auto">
@@ -219,7 +223,7 @@ export default function LandingPage() {
                 size="lg"
                 className="w-full sm:w-auto bg-[#F57C20] hover:bg-[#E86E12] text-white font-semibold text-base"
               >
-                Start Your Free Trial <ArrowRight className="ml-2 w-5 h-5" />
+                {t('cta.startToday')} <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
             <Button
@@ -227,7 +231,7 @@ export default function LandingPage() {
               variant="outline"
               className="w-full sm:w-auto border-[#F57C20] text-[#F57C20] hover:bg-[#FFF1E6] bg-transparent"
             >
-              Schedule Demo
+              {t('nav.watchDemo')}
             </Button>
           </div>
         </div>
