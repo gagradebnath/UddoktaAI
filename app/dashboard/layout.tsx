@@ -8,6 +8,8 @@ import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Bell, LogOut, Settings, Package, Megaphone, Home, MessageSquare } from "lucide-react"
+import { useLanguage } from "@/contexts/LanguageContext"
+import { LanguageSwitcher } from "@/components/LanguageSwitcher"
 
 export default function DashboardLayout({
   children,
@@ -18,6 +20,7 @@ export default function DashboardLayout({
   const router = useRouter()
   const [user, setUser] = useState<any>(null)
   const [mounted, setMounted] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     setMounted(true)
@@ -41,11 +44,11 @@ export default function DashboardLayout({
   const isActive = (path: string) => pathname === path
 
   const navItems = [
-    { label: "Dashboard", icon: Home, href: "/dashboard" },
-    { label: "Inventory AI", icon: Package, href: "/dashboard/inventory" },
-    { label: "Marketing AI", icon: Megaphone, href: "/dashboard/marketing" },
-    { label: "Customer Inbox", icon: MessageSquare, href: "/dashboard/inbox" },
-    { label: "Settings", icon: Settings, href: "/dashboard/settings" },
+    { label: t('dashboard.title'), icon: Home, href: "/dashboard" },
+    { label: t('dashboard.inventoryAI'), icon: Package, href: "/dashboard/inventory" },
+    { label: t('dashboard.marketingAI'), icon: Megaphone, href: "/dashboard/marketing" },
+    { label: t('dashboard.customerInbox'), icon: MessageSquare, href: "/dashboard/inbox" },
+    { label: t('dashboard.settings'), icon: Settings, href: "/dashboard/settings" },
   ]
 
   return (
@@ -96,7 +99,7 @@ export default function DashboardLayout({
               </svg>
             </button>
           </div>
-          <p className="text-xs text-[#555555]">SME Intelligence Platform</p>
+          <p className="text-xs text-[#555555]">{t('dashboard.smePlatform')}</p>
         </div>
 
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
@@ -118,7 +121,7 @@ export default function DashboardLayout({
         </nav>
 
         <div className="p-4 border-t border-[#E0E0E0]">
-          <p className="text-xs text-[#888888] mb-2">Logged in as</p>
+          <p className="text-xs text-[#888888] mb-2">{t('dashboard.loggedInAs')}</p>
           <p className="text-sm font-medium text-[#333333] truncate">{user.businessName}</p>
         </div>
       </aside>
@@ -129,11 +132,12 @@ export default function DashboardLayout({
         <header className="h-16 bg-white border-b border-[#E0E0E0] flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30">
           <div className="ml-12 lg:ml-0">
             <h2 className="text-base sm:text-lg font-semibold text-[#333333]">{user.businessName}</h2>
-            <p className="text-xs text-[#555555]">{user.type} Business</p>
+            <p className="text-xs text-[#555555]">{user.type} {t('dashboard.business')}</p>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
-            <Button variant="ghost" size="icon" className="text-[#4B4B4B] hover:text-[#F57C20] hover:bg-[#F9FAFB]">
+            <LanguageSwitcher />
+            <Button variant="ghost" size="icon" className="text-[#4B4B4B] hover:text-[#F57C20] hover:bg-[#F9FAFB]" title={t('common.notifications')}>
               <Bell className="w-5 h-5" />
             </Button>
 
@@ -149,17 +153,16 @@ export default function DashboardLayout({
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white border-[#E0E0E0]">
-                <DropdownMenuItem className="text-[#555555] cursor-pointer hover:text-[#333333] hover:bg-[#F9FAFB]">
-                  <Settings className="w-4 h-4 mr-2" />
-                  Settings
+                            <DropdownMenuContent align="end" className="bg-white border-gray-200">
+                <DropdownMenuItem className="text-[#333333] hover:bg-[#F9FAFB] hover:text-[#F57C20] cursor-pointer">
+                  {t('common.profile')}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="text-[#E74C3C] cursor-pointer hover:text-[#C0392B] hover:bg-[#F9FAFB]"
+                  className="text-red-600 hover:bg-red-50 hover:text-red-700 cursor-pointer"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
-                  Logout
+                  {t('common.logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
