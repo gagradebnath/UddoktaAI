@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { Send, TrendingUp, Clock, Facebook, MessageCircle, Instagram, Mail, CheckCircle, Clock3 } from "lucide-react"
+import { MarketingPosterGenerator } from "@/components/MarketingPosterGenerator"
 
 // Mock data
 const trendData = [
@@ -216,6 +217,9 @@ export default function MarketingPage() {
               </CardContent>
             </Card>
           )}
+
+          {/* Marketing Poster Generator */}
+          <MarketingPosterGenerator />
         </div>
 
         {/* Sidebar */}
