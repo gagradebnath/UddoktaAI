@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 import { Send, TrendingUp, Clock, Facebook, MessageCircle, Instagram, Mail, CheckCircle, Clock3 } from "lucide-react"
-import { MarketingPosterGenerator } from "@/components/MarketingPosterGenerator"
 
 // Mock data
 const trendData = [
@@ -65,26 +64,92 @@ const mockPostingHistory = [
   },
 ]
 
+interface PosterResponse {
+  caption: string;
+  poster_prompt: string;
+  image: string | null;
+  hf_error?: { error: string; details?: any };
+}
+
 export default function MarketingPage() {
   const [mounted, setMounted] = useState(false)
-  const [prompt, setPrompt] = useState("")
-  const [generatedPost, setGeneratedPost] = useState<typeof mockGeneratedPost | null>(null)
+  const [text, setText] = useState("")
+  const [stats, setStats] = useState("")
+  const [generatedPost, setGeneratedPost] = useState<PosterResponse | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([])
   const [isPosting, setIsPosting] = useState(false)
   const [postingHistory, setPostingHistory] = useState(mockPostingHistory)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const handleGeneratePost = () => {
-    setIsGenerating(true)
-    // Simulate AI generation
-    setTimeout(() => {
-      setGeneratedPost(mockGeneratedPost)
-      setIsGenerating(false)
-    }, 1000)
+  const parseStatsInput = (text: string) => {
+    if (!text || !text.trim()) return {};
+    try {
+      const obj = JSON.parse(text);
+      if (typeof obj !== 'object' || Array.isArray(obj) || obj === null) {
+        throw new Error('Stats must be a JSON object (e.g. {"price":499})');
+      }
+      return obj;
+    } catch (err) {
+      throw new Error('Invalid JSON in stats field: ' + (err instanceof Error ? err.message : String(err)));
+    }
+  };
+
+  const handleGeneratePost = async () => {
+    if (!text.trim()) {
+      setError("Please enter some text or idea");
+      return;
+    }
+
+    let parsedStats = {};
+    try {
+      parsedStats = parseStatsInput(stats);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+      return;
+    }
+
+    setIsGenerating(true);
+    setError(null);
+    setGeneratedPost(null);
+
+    try {
+      const response = await fetch("/api/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, stats: parsedStats })
+      });
+
+      let data: PosterResponse;
+      const ct = response.headers.get("content-type") || "";
+      if (ct.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const txt = await response.text();
+        if (!txt || !txt.trim()) {
+          throw new Error(`Empty response from server (status ${response.status})`);
+        }
+        try {
+          data = JSON.parse(txt);
+        } catch (e) {
+          throw new Error(`Server returned non-JSON response (status ${response.status}): ${txt}`);
+        }
+      }
+
+      if (data.hf_error) {
+        setError("Failed to generate image: " + (data.hf_error.error || JSON.stringify(data.hf_error)));
+      }
+      
+      setGeneratedPost(data);
+    } catch (err) {
+      setError("Failed to generate poster: " + (err instanceof Error ? err.message : String(err)));
+    } finally {
+      setIsGenerating(false);
+    }
   }
 
   const handlePostToSocialMedia = () => {
@@ -95,7 +160,7 @@ export default function MarketingPage() {
     setTimeout(() => {
       const newPost = {
         id: postingHistory.length + 1,
-        title: generatedPost.title,
+        title: generatedPost.caption || "Marketing Post",
         platforms: selectedPlatforms,
         postedAt: new Date().toLocaleString(),
         status: "posted",
@@ -120,61 +185,134 @@ export default function MarketingPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-[#333333] mb-1">Marketing AI</h1>
-        <p className="text-[#555555]">AI-powered content generation and social media posting</p>
+        {/* <h1 className="text-3xl font-bold text-[#333333] mb-1">Marketing AI</h1> */}
+        {/* <p className="text-[#555555]">AI-powered content generation and social media posting</p> */}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Content Generation */}
+          {/* AI Content & Poster Generator */}
           <Card className="bg-white border-gray-200">
             <CardHeader>
-              <CardTitle className="text-[#333333]">AI Content Generator</CardTitle>
+              <CardTitle className="text-[#333333]">AI Marketing Content Generator</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="prompt" className="text-[#333333]">
-                  What would you like to promote?
+                <Label htmlFor="text" className="text-[#333333]">
+                  Marketing Idea / Text:
                 </Label>
                 <Textarea
-                  id="prompt"
-                  placeholder="E.g., Promote our new coffee blend to young professionals..."
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
+                  id="text"
+                  placeholder="E.g., Promote our new premium tea blend to young professionals..."
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
                   className="bg-white border-gray-300 text-[#333333] placeholder-gray-400 min-h-20"
+                  rows={3}
                 />
               </div>
+
+              {/* <div className="space-y-2">
+                <Label htmlFor="stats" className="text-[#333333]">
+                  Optional Stats (JSON format):
+                </Label>
+                <Textarea
+                  id="stats"
+                  placeholder='{"target_age":"18-30","sector_focus":"organic tea"}'
+                  value={stats}
+                  onChange={(e) => setStats(e.target.value)}
+                  className="bg-white border-gray-300 text-[#333333] placeholder-gray-400"
+                  rows={2}
+                />
+              </div> */}
+
               <Button
                 onClick={handleGeneratePost}
-                disabled={!prompt || isGenerating}
+                disabled={!text || isGenerating}
                 className="w-full bg-[#F57C20] hover:bg-[#E06D1A] text-white font-semibold"
               >
                 <Send className="w-4 h-4 mr-2" />
-                {isGenerating ? "Generating..." : "Generate Post"}
+                {isGenerating ? "Generating..." : "Generate Marketing Content"}
               </Button>
+
+              {error && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+                  <p className="text-sm">{error}</p>
+                </div>
+              )}
             </CardContent>
           </Card>
 
-          {/* Generated Post Preview */}
+          {/* Generated Content & Poster Preview */}
           {generatedPost && (
             <Card className="bg-white border-gray-200">
               <CardHeader>
-                <CardTitle className="text-[#333333]">Generated Social Media Post</CardTitle>
+                <CardTitle className="text-[#333333]">Generated Marketing Content</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                {/* Caption */}
                 <div>
-                  <h3 className="text-lg font-semibold text-[#333333] mb-2">{generatedPost.title}</h3>
-                  <p className="text-[#555555] text-sm leading-relaxed">{generatedPost.body}</p>
+                  <h3 className="text-sm font-semibold text-[#333333] mb-2">Caption:</h3>
+                  <p className="text-[#555555] text-sm leading-relaxed bg-[#F9FAFB] p-3 rounded border border-gray-200">
+                    {generatedPost.caption}
+                  </p>
                 </div>
+
+                {/* Poster Prompt */}
+                <div style={{ display: "none" }}>
+                  <h3 className="text-sm font-semibold text-[#333333] mb-2">Poster Design Concept:</h3>
+                  <p className="text-[#555555] text-sm leading-relaxed bg-[#F9FAFB] p-3 rounded border border-gray-200">
+                    {generatedPost.poster_prompt}
+                  </p>
+                </div>
+
+                {/* Generated Image or Fallback */}
                 <div>
-                  <p className="text-[#F57C20] text-sm">{generatedPost.hashtags}</p>
-                </div>
-                <div className="bg-[#F9FAFB] p-4 rounded-lg border border-gray-200">
-                  <p className="text-xs text-[#555555] text-center">AI-Generated Graphic Preview</p>
-                  <div className="w-full h-32 bg-[#FFF1E6] rounded mt-2 flex items-center justify-center">
-                    <span className="text-[#555555]">Image will be generated here</span>
+                  <h3 className="text-sm font-semibold text-[#333333] mb-2">Generated Poster:</h3>
+                  <div className="bg-[#F9FAFB] p-4 rounded-lg border border-gray-200">
+                    {generatedPost.image ? (
+                      <img
+                        src={generatedPost.image}
+                        alt="Generated Marketing Poster"
+                        className="w-full max-w-sm mx-auto rounded-lg shadow-md"
+                      />
+                    ) : (
+                      <div className="w-full max-w-sm mx-auto aspect-square bg-gradient-to-br from-[#FFF1E6] to-[#FFE0C7] rounded-lg shadow-md flex flex-col items-center justify-center p-8 text-center">
+                        <div className="w-40 h-40 mb-4 rounded-full bg-[#F57C20] flex items-center justify-center">
+                          {/* <svg
+                            className="w-10 h-10 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                          </svg> */}
+                          <img className="rounded" src="https://media.tenor.com/pmedis8QK0gAAAAe/banana-pencil.png" alt="" />
+                        </div>
+                        <h4 className="text-lg font-semibold text-[#333333] mb-2">
+                          {generatedPost.caption.split(' ').slice(0, 5).join(' ')}...
+                        </h4>
+                        {/* <p className="text-sm text-[#555555] mb-4 max-w-md">
+                          {generatedPost.poster_prompt.split(' ').slice(0, 15).join(' ')}...
+                        </p> */}
+                        <div className="mt-4 px-4 py-2 bg-white rounded-full text-xs text-[#F57C20] font-semibold">
+                          Marketing Campaign
+                        </div>
+                      </div>
+                    )}
                   </div>
+                  {!generatedPost.image && generatedPost.hf_error && (
+                    <div className="mt-3 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded">
+                      <p className="text-sm">
+                        <strong>Note:</strong> Image generation service unavailable. Showing placeholder design. Content and caption generated successfully.
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Social Media Platform Selection */}
@@ -217,9 +355,6 @@ export default function MarketingPage() {
               </CardContent>
             </Card>
           )}
-
-          {/* Marketing Poster Generator */}
-          <MarketingPosterGenerator />
         </div>
 
         {/* Sidebar */}
