@@ -72,11 +72,13 @@ export default function AuthPage() {
       <Card className="w-full max-w-md shadow-2xl border-[#E0E0E0] bg-white backdrop-blur">
         <CardHeader className="space-y-2 text-center">
           <div className="flex justify-center mb-2">
-            <div className="w-10 h-10 bg-[#F57C20] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">⚡</span>
+            <div className="w-30 h-20 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">
+                <img src="/uddogtaAI.png" alt="" />
+              </span>
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold text-[#333333]">Uddokta AI</CardTitle>
+          {/* <CardTitle className="text-2xl font-bold text-[#333333]">Uddokta AI</CardTitle> */}
           <CardDescription className="text-[#555555]">Start Your Autonomous Business</CardDescription>
         </CardHeader>
 

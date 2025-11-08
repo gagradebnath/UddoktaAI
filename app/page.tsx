@@ -10,11 +10,13 @@ export default function LandingPage() {
       {/* Navigation */}
       <nav className="border-b border-[#E0E0E0] sticky top-0 z-50 bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-[#F57C20] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">⚡</span>
-            </div>
-            <span className="text-xl font-bold text-[#333333]">Uddokta AI</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src="/uddogtaAI.png" 
+              alt="Uddokta AI Logo" 
+              className="h-13 w-auto object-contain"
+            />
+            <span className="text-xl font-bold text-[#333333]"></span>
           </div>
           <Link href="/auth">
             <Button className="bg-[#F57C20] hover:bg-[#E86E12] text-white font-semibold">Get Started</Button>

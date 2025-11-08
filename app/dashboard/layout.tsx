@@ -70,10 +70,12 @@ export default function DashboardLayout({
         <div className="p-6 border-b border-[#E0E0E0]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-8 h-8 bg-[#F57C20] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">⚡</span>
-              </div>
-              <h1 className="text-lg font-bold text-[#333333]">Uddokta AI</h1>
+              <img 
+                src="/logo.png" 
+                alt="Uddokta AI Logo" 
+                className="h-8 w-auto object-contain"
+              />
+              <h1 className="text-lg font-bold text-[#333333]">উদ্যোক্তা</h1>
             </div>
             {/* Close button for mobile */}
             <button 
