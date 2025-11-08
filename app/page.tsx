@@ -239,8 +239,10 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 sm:mb-12">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-[#F57C20] rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold">⚡</span>
+                <div className="w-10 h-10 bg-[#F57C20] rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold">
+                    <img src="/uddoktaAi.png" alt="" />
+                  </span>
                 </div>
                 <span className="font-bold text-[#333333]">Uddokta AI</span>
               </div>
