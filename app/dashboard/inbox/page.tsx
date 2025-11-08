@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Pause, Settings2, Search, Bot, User } from "lucide-react"
+import { Pause, Settings2, Search, Bot, User, ArrowLeft } from "lucide-react"
 
 interface Message {
   id: string
@@ -145,6 +145,7 @@ export default function InboxPage() {
   const [selectedConversation, setSelectedConversation] = useState<Conversation>(mockConversations[0])
   const [messageText, setMessageText] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
+  const [isMobileConversationOpen, setIsMobileConversationOpen] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -221,10 +222,23 @@ export default function InboxPage() {
       conv.lastMessage.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
+  const handleSelectConversation = (conv: Conversation) => {
+    setSelectedConversation(conv)
+    setIsMobileConversationOpen(true)
+  }
+
+  const handleBackToList = () => {
+    setIsMobileConversationOpen(false)
+  }
+
   return (
     <div className="h-full flex flex-col lg:flex-row gap-4 lg:gap-6">
-      {/* Conversations List */}
-      <div className="w-full lg:w-80 flex flex-col bg-white rounded-lg border border-[#E0E0E0] overflow-hidden">
+      {/* Conversations List - Hidden on mobile when conversation is open */}
+      <div
+        className={`w-full lg:w-80 flex flex-col bg-white rounded-lg border border-[#E0E0E0] overflow-hidden ${
+          isMobileConversationOpen ? "hidden lg:flex" : "flex"
+        }`}
+      >
         <div className="p-4 border-b border-[#E0E0E0]">
           <h2 className="text-lg font-semibold text-[#333333] mb-4">Messages</h2>
           <div className="relative">
@@ -242,7 +256,7 @@ export default function InboxPage() {
           {filteredConversations.map((conv) => (
             <button
               key={conv.id}
-              onClick={() => setSelectedConversation(conv)}
+              onClick={() => handleSelectConversation(conv)}
               className={`w-full px-4 py-3 border-b border-[#E0E0E0] text-left transition-colors hover:bg-[#F9FAFB] ${
                 selectedConversation.id === conv.id ? "bg-[#FFF1E6] border-l-2 border-l-[#F57C20]" : ""
               }`}
@@ -274,11 +288,25 @@ export default function InboxPage() {
         </div>
       </div>
 
-      {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-white rounded-lg border border-[#E0E0E0] overflow-hidden">
+      {/* Chat Area - Hidden on mobile when conversation is not open */}
+      <div
+        className={`flex-1 flex flex-col bg-white rounded-lg border border-[#E0E0E0] overflow-hidden ${
+          isMobileConversationOpen ? "flex" : "hidden lg:flex"
+        }`}
+      >
         {/* Chat Header */}
         <div className="p-4 border-b border-[#E0E0E0] flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          {/* Back Button - Only visible on mobile */}
+          <button
+            onClick={handleBackToList}
+            className="lg:hidden mr-2 p-2 hover:bg-[#F9FAFB] rounded-lg transition-colors"
+            aria-label="Back to conversations"
+            title="Back to conversations list"
+          >
+            <ArrowLeft className="w-5 h-5 text-[#333333]" />
+          </button>
+
+          <div className="flex items-center gap-3 flex-1">
             <div className="w-12 h-12 bg-[#F57C20] rounded-full flex items-center justify-center text-white font-bold">
               {selectedConversation.customerImage}
             </div>
