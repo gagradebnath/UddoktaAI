@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Pause, Settings2, Search, Bot, User, ArrowLeft } from "lucide-react"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 interface Message {
   id: string
@@ -147,6 +148,7 @@ export default function InboxPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [isMobileConversationOpen, setIsMobileConversationOpen] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const { t } = useLanguage()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -240,11 +242,11 @@ export default function InboxPage() {
         }`}
       >
         <div className="p-4 border-b border-[#E0E0E0]">
-          <h2 className="text-lg font-semibold text-[#333333] mb-4">Messages</h2>
+          <h2 className="text-lg font-semibold text-[#333333] mb-4">{t('inbox.conversations')}</h2>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#888888]" />
             <Input
-              placeholder="Search conversations..."
+              placeholder={t('inbox.search')}
               className="pl-10 bg-white border-[#E0E0E0] text-[#333333] placeholder:text-[#888888]"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -300,8 +302,8 @@ export default function InboxPage() {
           <button
             onClick={handleBackToList}
             className="lg:hidden mr-2 p-2 hover:bg-[#F9FAFB] rounded-lg transition-colors"
-            aria-label="Back to conversations"
-            title="Back to conversations list"
+            aria-label={t('inbox.backToConversations')}
+            title={t('inbox.backToConversations')}
           >
             <ArrowLeft className="w-5 h-5 text-[#333333]" />
           </button>
@@ -335,16 +337,16 @@ export default function InboxPage() {
               {selectedConversation.aiEnabled ? (
                 <>
                   <Bot className="w-4 h-4 mr-1" />
-                  AI On
+                  {t('inbox.aiEnabled')}
                 </>
               ) : (
                 <>
                   <Pause className="w-4 h-4 mr-1" />
-                  AI Paused
+                  {t('inbox.aiDisabled')}
                 </>
               )}
             </Button>
-            <Button size="sm" variant="ghost" className="text-[#555555] hover:text-[#333333] hover:bg-[#F9FAFB]">
+            <Button size="sm" variant="ghost" className="text-[#555555] hover:text-[#333333] hover:bg-[#F9FAFB]" title={t('inbox.settings')}>
               <Settings2 className="w-4 h-4" />
             </Button>
           </div>
